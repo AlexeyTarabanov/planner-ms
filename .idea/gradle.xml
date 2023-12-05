@@ -3,11 +3,41 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/planner-config" name="planner-config">
+                <projects>
+                  <project path="$PROJECT_DIR$/planner-config" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/planner-gateway" name="planner-gateway">
+                <projects>
+                  <project path="$PROJECT_DIR$/planner-gateway" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/planner-server" name="planner-server">
+                <projects>
+                  <project path="$PROJECT_DIR$/planner-server" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/planner-entity" name="planner-entity">
+                <projects>
+                  <project path="$PROJECT_DIR$/planner-entity" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/planner-config" />
+            <option value="$PROJECT_DIR$/planner-entity" />
+            <option value="$PROJECT_DIR$/planner-gateway" />
+            <option value="$PROJECT_DIR$/planner-server" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -17,6 +47,15 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/planner-config/planner-config" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/planner-entity/planner-entity" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/planner-entity/planner-entity" />
           </set>
         </option>
       </GradleProjectSettings>
