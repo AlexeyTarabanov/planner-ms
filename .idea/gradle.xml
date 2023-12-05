@@ -22,6 +22,15 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/planner-gateway/planner-gateway" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/planner-gateway/planner-gateway" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/planner-server/planner-server" />
         <option name="modules">
           <set>
