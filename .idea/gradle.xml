@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
@@ -26,6 +27,11 @@
                   <project path="$PROJECT_DIR$/planner-entity" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/planner-todo" name="planner-todo">
+                <projects>
+                  <project path="$PROJECT_DIR$/planner-todo" />
+                </projects>
+              </build>
             </builds>
           </compositeBuild>
         </compositeConfiguration>
@@ -38,6 +44,7 @@
             <option value="$PROJECT_DIR$/planner-entity" />
             <option value="$PROJECT_DIR$/planner-gateway" />
             <option value="$PROJECT_DIR$/planner-server" />
+            <option value="$PROJECT_DIR$/planner-todo" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -74,6 +81,15 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/planner-server/planner-server" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/planner-todo/planner-todo" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/planner-todo/planner-todo" />
           </set>
         </option>
       </GradleProjectSettings>
