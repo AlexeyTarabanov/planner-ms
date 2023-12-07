@@ -18,7 +18,7 @@ import java.util.Objects;
  * */
 
 @Entity
-@Table(name = "task", schema = "users", catalog = "planner_users")
+@Table(name = "task", schema = "todo", catalog = "planner_todo")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
