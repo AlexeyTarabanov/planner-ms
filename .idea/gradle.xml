@@ -32,6 +32,11 @@
                   <project path="$PROJECT_DIR$/planner-todo" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/planner-utils" name="planner-utils">
+                <projects>
+                  <project path="$PROJECT_DIR$/planner-utils" />
+                </projects>
+              </build>
             </builds>
           </compositeBuild>
         </compositeConfiguration>
@@ -45,6 +50,7 @@
             <option value="$PROJECT_DIR$/planner-gateway" />
             <option value="$PROJECT_DIR$/planner-server" />
             <option value="$PROJECT_DIR$/planner-todo" />
+            <option value="$PROJECT_DIR$/planner-utils" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -90,6 +96,15 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/planner-todo/planner-todo" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/planner-utils/planner-utils" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/planner-utils/planner-utils" />
           </set>
         </option>
       </GradleProjectSettings>
