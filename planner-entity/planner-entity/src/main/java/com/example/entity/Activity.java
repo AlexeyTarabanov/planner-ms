@@ -14,7 +14,7 @@ import java.util.Objects;
  * */
 
 @Entity // Обозначает класс как сущность, с которой будет взаимодействовать Hibernate
-@Table(name = "activity", schema = "todolist", catalog = "postgres")
+@Table(name = "activity", schema = "todo", catalog = "planner_todo")
 @NoArgsConstructor // Генерируют конструкторы без аргументов и с аргументами соответственно
 @AllArgsConstructor
 @Setter

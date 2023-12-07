@@ -38,8 +38,8 @@ public class CategoryController {
     }
 
     @PostMapping("/all")
-    public List<Category> findAll(@RequestBody Long id) {
-        return categoryService.findAll(id);
+    public List<Category> findAll(@RequestBody Long userId) {
+        return categoryService.findAll(userId);
     }
 
     @PostMapping("/add")
@@ -51,6 +51,9 @@ public class CategoryController {
         if (category.getTitle() == null || category.getTitle().trim().length() == 0) {
             return new ResponseEntity("missed param: title", HttpStatus.NOT_ACCEPTABLE); // 406
         }
+
+        System.err.println("Received category with id: " + category.getId() + ", title: " + category.getTitle());
+
         // возвращаем добавленный объект с заполненным ID
         return ResponseEntity.ok(categoryService.add(category)); // 200
     }
@@ -95,12 +98,12 @@ public class CategoryController {
     public ResponseEntity<List<Category>> search(@RequestBody CategorySearchValues categorySearchValues) {
 
         // проверка на обязательные параметры
-        if (categorySearchValues.getId() == null || categorySearchValues.getId() == 0) {
+        if (categorySearchValues.getUserId() == null || categorySearchValues.getUserId() == 0) {
             return new ResponseEntity("missed param: user id", HttpStatus.NOT_ACCEPTABLE);
         }
 
         // поиск категорий пользователя по названию
-        List<Category> list = categoryService.findByTitle(categorySearchValues.getTitle(), categorySearchValues.getId());
+        List<Category> list = categoryService.findByTitle(categorySearchValues.getTitle(), categorySearchValues.getUserId());
 
         return ResponseEntity.ok(list);
     }
