@@ -13,9 +13,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages = {"com.example"})
 @EnableJpaRepositories(basePackages = {"com.example.todo"})
 public class PlannerTodoApplication {
-
-	private Category category;
-
 	public static void main(String[] args) {
 		SpringApplication.run(PlannerTodoApplication.class, args);
 	}
