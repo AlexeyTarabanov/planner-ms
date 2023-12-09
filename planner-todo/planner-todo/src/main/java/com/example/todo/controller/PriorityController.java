@@ -3,7 +3,7 @@ package com.example.todo.controller;
 import com.example.entity.Priority;
 import com.example.todo.search.PrioritySearchValues;
 import com.example.todo.service.PriorityService;
-import com.example.utils.resttemplate.UserRestBuilder;
+import com.example.utils.webclient.UserWebClientBuilder;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +32,13 @@ public class PriorityController {
 
     // доступ к данным из БД
     private PriorityService priorityService;
-    private UserRestBuilder userRestBuilder;
+    private UserWebClientBuilder userWebClientBuilder;
 
     // используем автоматическое внедрение экземпляра класса через конструктор
     // не используем @Autowired ля переменной класса, т.к. "Field injection is not recommended "
-    public PriorityController(PriorityService priorityService, UserRestBuilder userRestBuilder) {
+    public PriorityController(PriorityService priorityService, UserWebClientBuilder userWebClientBuilder) {
         this.priorityService = priorityService;
-        this.userRestBuilder = userRestBuilder;
+        this.userWebClientBuilder = userWebClientBuilder;
     }
 
 
@@ -68,7 +68,7 @@ public class PriorityController {
         }
 
         // если такой пользователь существует
-        if (userRestBuilder.userExists(priority.getUserId())) { // вызываем микросервис из другого модуля
+        if (userWebClientBuilder.userExists(priority.getUserId())) { // вызываем микросервис из другого модуля
             return ResponseEntity.ok(priorityService.add(priority)); // возвращаем добавленный объект с заполненным ID
         }
 
