@@ -3,6 +3,7 @@ package com.example.todo.controller;
 import com.example.entity.Category;
 import com.example.todo.search.CategorySearchValues;
 import com.example.todo.service.CategoryService;
+import com.example.utils.resttemplate.UserRestBuilder;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +26,13 @@ public class CategoryController {
 
     // доступ к данным из БД
     private CategoryService categoryService;
+    private UserRestBuilder userRestBuilder;
 
     // используем автоматическое внедрение экземпляра класса через конструктор
     // не используем @Autowired ля переменной класса, т.к. "Field injection is not recommended "
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryService categoryService, UserRestBuilder userRestBuilder) {
         this.categoryService = categoryService;
+        this.userRestBuilder = userRestBuilder;
     }
 
     @GetMapping("/id")
@@ -52,10 +55,12 @@ public class CategoryController {
             return new ResponseEntity("missed param: title", HttpStatus.NOT_ACCEPTABLE); // 406
         }
 
-        System.err.println("Received category with id: " + category.getId() + ", title: " + category.getTitle());
+        if (userRestBuilder.userExists(category.getUserId())) {        // вызываем микросервис из другого модуля
+            return ResponseEntity.ok(categoryService.add(category));   // возвращаем добавленный объект с заполненным ID
+        }
 
         // возвращаем добавленный объект с заполненным ID
-        return ResponseEntity.ok(categoryService.add(category)); // 200
+        return new ResponseEntity("user id=" + category.getUserId() + " not found", HttpStatus.NOT_ACCEPTABLE);  // 406
     }
 
     @PutMapping("/update")

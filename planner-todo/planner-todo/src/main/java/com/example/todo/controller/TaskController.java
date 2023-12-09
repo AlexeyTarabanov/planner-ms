@@ -3,6 +3,7 @@ package com.example.todo.controller;
 import com.example.entity.Task;
 import com.example.todo.search.TaskSearchValues;
 import com.example.todo.service.TaskService;
+import com.example.utils.resttemplate.UserRestBuilder;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,12 +24,14 @@ public class TaskController {
 
     public static final String ID_COLUMN = "id"; // имя столбца id
     private final TaskService taskService; // сервис для доступа к данным (напрямую к репозиториям не обращаемся)
+    private UserRestBuilder userRestBuilder;
 
 
     // используем автоматическое внедрение экземпляра класса через конструктор
     // не используем @Autowired ля переменной класса, т.к. "Field injection is not recommended "
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, UserRestBuilder userRestBuilder) {
         this.taskService = taskService;
+        this.userRestBuilder = userRestBuilder;
     }
 
 
@@ -53,7 +56,12 @@ public class TaskController {
             return new ResponseEntity("missed param: title", HttpStatus.NOT_ACCEPTABLE);
         }
 
-        return ResponseEntity.ok(taskService.add(task)); // возвращаем созданный объект со сгенерированным id
+        // если такой пользователь существует
+        if (userRestBuilder.userExists(task.getUserId())) { // вызываем микросервис из другого модуля
+            return ResponseEntity.ok(taskService.add(task)); // возвращаем добавленный объект с заполненным ID
+        }
+
+        return new ResponseEntity("user id=" + task.getUserId() + " not found", HttpStatus.NOT_ACCEPTABLE);
 
     }
 
