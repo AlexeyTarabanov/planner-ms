@@ -55,9 +55,12 @@ public class CategoryController {
             return new ResponseEntity("missed param: title", HttpStatus.NOT_ACCEPTABLE); // 406
         }
 
-        if (userWebClientBuilder.userExists(category.getUserId())) {        // вызываем микросервис из другого модуля
-            return ResponseEntity.ok(categoryService.add(category));   // возвращаем добавленный объект с заполненным ID
-        }
+//        if (userWebClientBuilder.userExists(category.getUserId())) {        // вызываем микросервис из другого модуля
+//            return ResponseEntity.ok(categoryService.add(category));   // возвращаем добавленный объект с заполненным ID
+//        }
+
+        userWebClientBuilder.userExistsAsync(category.getUserId())
+                .subscribe(user -> System.out.println("user = " + user));
 
         // возвращаем добавленный объект с заполненным ID
         return new ResponseEntity("user id=" + category.getUserId() + " not found", HttpStatus.NOT_ACCEPTABLE);  // 406
