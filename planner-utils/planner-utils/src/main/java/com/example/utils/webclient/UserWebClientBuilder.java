@@ -9,6 +9,7 @@ import reactor.core.publisher.Flux;
 public class UserWebClientBuilder {
 
     private static final String BASE_URL_USER = "http://localhost:8765/planner-users/user/";
+    private static final String BASE_URL_DATA = "http://localhost:8765/planner-todo/data/";
 
     /**
      *
@@ -20,7 +21,7 @@ public class UserWebClientBuilder {
     public boolean userExists(Long userId){
          try {
 
-            User user = WebClient.create(BASE_URL_USER)
+             User user = WebClient.create(BASE_URL_USER)
                     .post()
                     .uri("id")
                     .bodyValue(userId)
@@ -55,6 +56,18 @@ public class UserWebClientBuilder {
                 .bodyValue(userId)  // Установка тела запроса (в данном случае, идентификатор пользователя)
                 .retrieve()  // Выполнение запроса и получение ответа
                 .bodyToFlux(User.class);
+    }
+
+    // иниц. начальных данных
+    public Flux<Boolean> initUserData(Long userId) {
+
+        return WebClient.create(BASE_URL_DATA)
+                .post()
+                .uri("init")
+                .bodyValue(userId)
+                .retrieve()
+                .bodyToFlux(Boolean.class);
+
     }
 
 }

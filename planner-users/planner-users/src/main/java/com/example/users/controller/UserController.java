@@ -1,8 +1,10 @@
 package com.example.users.controller;
 
+import com.example.MyUserWebClientBuilder;
 import com.example.entity.User;
 import com.example.users.search.UserSearchValues;
 import com.example.users.service.UserService;
+import com.example.utils.webclient.UserWebClientBuilder;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,9 +23,14 @@ public class UserController {
 
     public static final String ID_COLUMN = "id"; // имя столбца id
     private final UserService userService; // сервис для доступа к данным (напрямую к репозиториям не обращаемся)
+    private UserWebClientBuilder userWebClientBuilder;
+    private MyUserWebClientBuilder myUserWebClientBuilder;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserWebClientBuilder userWebClientBuilder,
+                          MyUserWebClientBuilder myUserWebClientBuilder) {
         this.userService = userService;
+        this.userWebClientBuilder = userWebClientBuilder;
+        this.myUserWebClientBuilder = myUserWebClientBuilder;
     }
 
     @PostMapping("/add")
@@ -50,6 +57,14 @@ public class UserController {
 
         // добавляем пользователя
         user = userService.add(user);
+
+        if (user != null) {
+            // заполняем начальные данные пользователя (в параллелном потоке)
+            myUserWebClientBuilder.initUserData(user.getId()).subscribe(result -> {
+                        System.err.println("user populated: " + result);
+                    }
+            );
+        }
 
         return ResponseEntity.ok(user); // возвращаем созданный объект со сгенерированным id
 
