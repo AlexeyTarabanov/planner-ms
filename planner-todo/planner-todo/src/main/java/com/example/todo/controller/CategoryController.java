@@ -1,6 +1,7 @@
 package com.example.todo.controller;
 
 import com.example.entity.Category;
+import com.example.todo.feign.UserFeignClient;
 import com.example.todo.search.CategorySearchValues;
 import com.example.todo.service.CategoryService;
 import com.example.utils.webclient.UserWebClientBuilder;
@@ -27,12 +28,16 @@ public class CategoryController {
     // доступ к данным из БД
     private CategoryService categoryService;
     private UserWebClientBuilder userWebClientBuilder;
+    private UserFeignClient userFeignClient;
 
     // используем автоматическое внедрение экземпляра класса через конструктор
     // не используем @Autowired ля переменной класса, т.к. "Field injection is not recommended "
-    public CategoryController(CategoryService categoryService, UserWebClientBuilder userWebClientBuilder) {
+    public CategoryController(CategoryService categoryService,
+                              UserWebClientBuilder userWebClientBuilder,
+                              UserFeignClient userFeignClient) {
         this.categoryService = categoryService;
         this.userWebClientBuilder = userWebClientBuilder;
+        this.userFeignClient = userFeignClient;
     }
 
     @GetMapping("/id")
@@ -59,8 +64,12 @@ public class CategoryController {
 //            return ResponseEntity.ok(categoryService.add(category));   // возвращаем добавленный объект с заполненным ID
 //        }
 
-        userWebClientBuilder.userExistsAsync(category.getUserId())
-                .subscribe(user -> System.out.println("user = " + user));
+//        userWebClientBuilder.userExistsAsync(category.getUserId())
+//                .subscribe(user -> System.out.println("user = " + user));
+
+        if (userFeignClient.findUserById(category.getUserId()) != null) {
+            return ResponseEntity.ok(categoryService.add(category));
+        }
 
         // возвращаем добавленный объект с заполненным ID
         return new ResponseEntity("user id=" + category.getUserId() + " not found", HttpStatus.NOT_ACCEPTABLE);  // 406
